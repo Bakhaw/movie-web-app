@@ -5,7 +5,17 @@ export async function getTrendingData<T>(
   dataSourceType: DataSourceType,
   timeWindow: TimeWindow = TimeWindow.week
 ): Promise<ApiResponseList<T>> {
-  const url = `${config.TMDB_API_BASE_URL}/trending/${dataSourceType}/${timeWindow}?language=fr-FR&api_key=${config.TMDB_API_KEY}`;
+  const url = `${config.TMDB_API_BASE_URL}/trending/${dataSourceType}/${timeWindow}?language=en-EN&api_key=${config.TMDB_API_KEY}`;
+
+  const res = await fetch(url);
+  return res.json();
+}
+
+export async function getDataById<T>(
+  dataSourceType: DataSourceType,
+  id: string
+): Promise<T> {
+  const url = `${config.TMDB_API_BASE_URL}/${dataSourceType}/${id}?language=en-EN&api_key=${config.TMDB_API_KEY}`;
 
   const res = await fetch(url);
   return res.json();
