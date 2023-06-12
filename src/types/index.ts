@@ -3,30 +3,34 @@ export interface ApiResponseList<T> {
   results: T[];
 }
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
 
 export interface Movie {
   backdrop_path?: string;
-  genres?: Genre[];
+  genres: Genre[];
+  homepage: string;
   id: number;
-  overview?: string;
+  original_language: string;
+  overview: string;
   popularity?: number;
   poster_path: string;
-  release_date?: string;
+  release_date: string;
+  runtime?: number;
   title: string;
   video?: boolean;
-  vote_average?: number;
+  vote_average: number;
   vote_count?: number;
 }
 
 export interface TV {
   backdrop_path?: string;
   id: number;
+  genres: Genre[];
   name: string;
-  overview?: string;
+  overview: string;
   poster_path: string;
   popularity?: number;
   vote_average?: number;
