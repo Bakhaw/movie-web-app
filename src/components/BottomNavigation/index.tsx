@@ -3,11 +3,14 @@
 import NavigationLink from "../NavigationLink";
 
 import { routes } from "@/config/routes";
-import { isMdScreen } from "@/helpers/isMdScreen";
+import useDeviceSize from "@/hooks/useDeviceSize";
 
 // This Navigation is used for mobile
 // <LeftNavigation /> is used for desktop
 const BottomNavigation = () => {
+  const [innerWidth, _innerHeight] = useDeviceSize();
+  const isMdScreen = innerWidth > 768;
+
   if (isMdScreen) return null;
 
   return (
