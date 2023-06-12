@@ -15,7 +15,7 @@ const Poster: React.FC<PosterProps> = ({ height, src, title }) => (
       height={0}
       width={0}
       sizes="100vw"
-      src={`${config.TMDB_IMAGE_BASE_URL}/${src}`}
+      src={`${config.TMDB_IMAGE_BASE_URL}${src}`}
       className={`h-[${height}px] w-auto object-cover border-8 bg-purple-dark border-purple-grey group-hover:border-orange`}
     />
 
