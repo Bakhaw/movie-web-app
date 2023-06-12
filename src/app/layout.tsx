@@ -1,6 +1,7 @@
-import "./globals.css";
+import BottomNavigation from "@/components/BottomNavigation";
+import LeftNavigation from "@/components/LeftNavigation";
 
-import NavigationBar from "@/components/NavigationBar";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -9,9 +10,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex">
-        <NavigationBar />
+      <body className="flex flex-col md:flex-row">
+        <div className="hidden md:flex">
+          <LeftNavigation />
+        </div>
+
         <div className="min-h-screen w-full bg-purple">{children}</div>
+
+        <div className="md:hidden">
+          <BottomNavigation />
+        </div>
       </body>
     </html>
   );
