@@ -26,15 +26,20 @@ export interface Movie {
 }
 
 export interface TV {
-  backdrop_path?: string;
+  backdrop_path: string;
+  first_air_date: string;
+  homepage: string;
   id: number;
   genres: Genre[];
   name: string;
+  number_of_episodes: number;
+  number_of_seasons: number;
+  original_language: string;
   overview: string;
   poster_path: string;
   popularity?: number;
-  vote_average?: number;
-  vote_count?: number;
+  vote_average: number;
+  vote_count: number;
 }
 
 export enum DataSourceType {
