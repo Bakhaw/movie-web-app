@@ -14,16 +14,11 @@ const TvList: React.FC<TvListProps> = ({ tv }) => (
   <div>
     <ListTitle>TV</ListTitle>
 
-    <ListContainer columnWidth={320}>
+    <ListContainer columnWidth={240}>
       {tv.map((tv) => (
         <li key={tv.id}>
           <Link href={`/tv/${tv.id}`}>
-            <Poster
-              height="450"
-              width="400"
-              src={tv.poster_path}
-              title={tv.name}
-            />
+            <Poster src={tv.poster_path} title={tv.name} />
           </Link>
         </li>
       ))}

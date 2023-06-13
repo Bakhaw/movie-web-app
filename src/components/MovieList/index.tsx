@@ -14,16 +14,11 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => (
   <div>
     <ListTitle>Movies</ListTitle>
 
-    <ListContainer columnWidth={320}>
+    <ListContainer columnWidth={240}>
       {movies.map((movie) => (
         <li key={movie.id}>
           <Link href={`/movie/${movie.id}`}>
-            <Poster
-              height="450"
-              width="400"
-              src={movie.poster_path}
-              title={movie.title}
-            />
+            <Poster src={movie.poster_path} title={movie.title} />
           </Link>
         </li>
       ))}

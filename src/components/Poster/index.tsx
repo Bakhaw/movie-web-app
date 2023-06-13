@@ -5,31 +5,29 @@ import config from "@/config";
 
 interface PosterProps {
   disableHover?: boolean; // default false
-  height: string;
   src: string;
   title: React.ReactNode;
-  width: string;
 }
 
 const Poster: React.FC<PosterProps> = ({
   disableHover = false,
-  height,
   src,
   title,
-  width,
 }) => (
   <div className="group w-fit">
-    <Image
-      alt="Poster"
-      height={0}
-      width={0}
-      sizes="100vw"
-      src={`${config.TMDB_IMAGE_BASE_URL}${src}`}
-      className={classNames(
-        `h-[${height}px] w-[${width}px] object-cover border-8 bg-purple-dark border-purple-grey`,
-        !disableHover && "group-hover:border-orange"
-      )}
-    />
+    <div className="relative w-[240px] aspect-[2/3]">
+      <Image
+        className={classNames(
+          `object-cover border-8 bg-purple-dark border-purple-grey`,
+          !disableHover && "group-hover:border-orange"
+        )}
+        alt="Poster"
+        src={`${config.TMDB_IMAGE_BASE_URL}${src}`}
+        sizes="(max-width: 768px) 100vw"
+        fill
+        priority
+      />
+    </div>
 
     <h1
       className={classNames(

@@ -24,12 +24,10 @@ async function Page({ params }: PageProps) {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="flex flex-col lg:flex-row justify-start items-start gap-6 h-[60vh] p-6 bg-purple-dark/70 border-orange border-t-8 overflow-scroll">
+      <div className="flex flex-col lg:flex-row justify-start items-start gap-6 h-[60vh] p-6 bg-purple-dark/70 border-orange border-t-8 overflow-y-scroll">
         <div className="hidden lg:inline">
           <Poster
             disableHover
-            height="350"
-            width="400"
             src={movie.poster_path}
             title={
               <div className="flex items-center gap-4">
