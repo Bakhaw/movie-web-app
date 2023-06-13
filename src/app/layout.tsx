@@ -15,7 +15,9 @@ export default function RootLayout({
           <LeftNavigation />
         </div>
 
-        <div className="min-h-screen w-full bg-purple">{children}</div>
+        <div className="min-h-screen w-full pb-[64px] md:pb-0 bg-purple">
+          {children}
+        </div>
 
         <div className="md:hidden">
           <BottomNavigation />
