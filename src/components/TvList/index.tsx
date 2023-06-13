@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { TV } from "@/types";
-import { POSTER_BASE_HEIGHT } from "@/config/constants";
 
 import ListContainer from "../ListContainer";
 import ListTitle from "../ListTitle";
@@ -20,7 +19,8 @@ const TvList: React.FC<TvListProps> = ({ tv }) => (
         <li key={tv.id}>
           <Link href={`/tv/${tv.id}`}>
             <Poster
-              height={POSTER_BASE_HEIGHT}
+              height="450"
+              width="400"
               src={tv.poster_path}
               title={tv.name}
             />
