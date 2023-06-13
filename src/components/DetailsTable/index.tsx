@@ -6,7 +6,9 @@ interface DetailsTableProps {
   genres: Genre[];
   originalCountry: string;
   releaseDate: string;
-  runtime: string;
+  runtime?: number;
+  totalEpisodes?: number;
+  totalSeasons?: number;
 }
 
 const DetailsTable: React.FC<DetailsTableProps> = ({
@@ -14,6 +16,8 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
   originalCountry,
   releaseDate,
   runtime,
+  totalEpisodes,
+  totalSeasons,
 }) => (
   <table className="w-full">
     <tbody>
@@ -35,10 +39,26 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
         </td>
       </tr>
 
-      <tr className="border-b-white border-b-[1px]">
-        <td>Runtime</td>
-        <td className="p-4">{runtime} min</td>
-      </tr>
+      {runtime && (
+        <tr className="border-b-white border-b-[1px]">
+          <td>Runtime</td>
+          <td className="p-4">{runtime} min</td>
+        </tr>
+      )}
+
+      {totalSeasons && (
+        <tr className="border-b-white border-b-[1px]">
+          <td>Total seasons</td>
+          <td className="p-4">{totalSeasons}</td>
+        </tr>
+      )}
+
+      {totalEpisodes && (
+        <tr className="border-b-white border-b-[1px]">
+          <td>Total episodes</td>
+          <td className="p-4">{totalEpisodes}</td>
+        </tr>
+      )}
 
       <tr className="border-b-white border-b-[1px]">
         <td>Original country</td>

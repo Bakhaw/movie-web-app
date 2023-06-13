@@ -49,7 +49,7 @@ async function Page({ params }: PageProps) {
                 genres={movie.genres}
                 originalCountry={movie.original_language}
                 releaseDate={movie.release_date}
-                runtime={String(movie.runtime)}
+                runtime={movie.runtime}
               />
             </div>
           </div>
