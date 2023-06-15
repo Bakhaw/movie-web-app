@@ -1,6 +1,13 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { getDataByType } from "@/api";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -19,16 +26,18 @@ const Page: React.FC = () => {
   const [searchText, setSearchText] = useState(queryParams.search || "");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+  const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
   const [sortType, setSortType] = useState<DataSortType>(DataSortType.popular);
 
   async function initData() {
-    const popularMovies = await getDataByType<Movie>(
-      DataSourceType.movie,
-      sortType
-    );
+    const [popularMovies, topRatedMovies] = await Promise.all([
+      getDataByType<Movie>(DataSourceType.movie, DataSortType.popular),
+      getDataByType<Movie>(DataSourceType.movie, DataSortType.top_rated),
+    ]);
 
-    setMovies(popularMovies.results);
+    setPopularMovies(popularMovies.results);
+    setTopRatedMovies(topRatedMovies.results);
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -55,10 +64,10 @@ const Page: React.FC = () => {
     setSortType(e.target.value as DataSortType);
   }
 
-  // Load Movies & TV data from the API
+  // Load Movies data from the API
   useEffect(() => {
     initData();
-  }, [sortType]);
+  }, []);
 
   // Synchronize queryParams with input tag
   useEffect(() => {
@@ -74,11 +83,18 @@ const Page: React.FC = () => {
     inputRef.current.value = queryParams.search;
   }, [queryParams.search]);
 
+  const currentMovies =
+    sortType === DataSortType.popular ? popularMovies : topRatedMovies;
+
   // Filter datas
-  const filteredMovies = movies.filter((movie) =>
-    searchText
-      ? movie.title.toLowerCase().includes(searchText.toLowerCase())
-      : movie
+  const filteredMovies = useMemo(
+    () =>
+      currentMovies.filter((movie) =>
+        searchText
+          ? movie.title.toLowerCase().includes(searchText.toLowerCase())
+          : movie
+      ),
+    [currentMovies, searchText]
   );
 
   return (

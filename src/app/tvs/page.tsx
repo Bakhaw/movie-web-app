@@ -1,6 +1,13 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { getDataByType } from "@/api";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -19,13 +26,18 @@ const Page: React.FC = () => {
   const [searchText, setSearchText] = useState(queryParams.search || "");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [tv, setTv] = useState<TV[]>([]);
+  const [popularTv, setPopularTv] = useState<TV[]>([]);
+  const [topRatedTv, setTopRatedTv] = useState<TV[]>([]);
   const [sortType, setSortType] = useState<DataSortType>(DataSortType.popular);
 
   async function initData() {
-    const popularTv = await getDataByType<TV>(DataSourceType.tv, sortType);
+    const [popularTv, topRatedTv] = await Promise.all([
+      getDataByType<TV>(DataSourceType.tv, DataSortType.popular),
+      getDataByType<TV>(DataSourceType.tv, DataSortType.top_rated),
+    ]);
 
-    setTv(popularTv.results);
+    setPopularTv(popularTv.results);
+    setTopRatedTv(topRatedTv.results);
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -53,10 +65,10 @@ const Page: React.FC = () => {
     setSortType(e.target.value as DataSortType);
   }
 
-  // Load Movies & TV data from the API
+  // Load TV data from the API
   useEffect(() => {
     initData();
-  }, [sortType]);
+  }, []);
 
   // Synchronize queryParams with input tag
   useEffect(() => {
@@ -72,9 +84,17 @@ const Page: React.FC = () => {
     inputRef.current.value = queryParams.search;
   }, [queryParams.search]);
 
+  const currentTv = sortType === DataSortType.popular ? popularTv : topRatedTv;
+
   // Filter datas
-  const filteredTv = tv.filter((tv) =>
-    searchText ? tv.name.toLowerCase().includes(searchText.toLowerCase()) : tv
+  const filteredTv = useMemo(
+    () =>
+      currentTv.filter((tv) =>
+        searchText
+          ? tv.name.toLowerCase().includes(searchText.toLowerCase())
+          : tv
+      ),
+    [currentTv, searchText]
   );
 
   return (
