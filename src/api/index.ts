@@ -1,4 +1,9 @@
-import { ApiResponseList, DataSourceType, TimeWindow } from "@/types";
+import {
+  ApiResponseList,
+  DataSortType,
+  DataSourceType,
+  TimeWindow,
+} from "@/types";
 import { fetchData } from "@/utils/fetchData";
 import { generateUrl } from "@/utils/generateUrl";
 
@@ -18,6 +23,16 @@ export async function getDataById<T>(
 ): Promise<T> {
   const url = generateUrl(`${dataSourceType}/${id}`, {});
   const data = fetchData<T>(url);
+
+  return data;
+}
+
+export async function getDataByType<T>(
+  dataSourceType: DataSourceType,
+  dataSortType: DataSortType
+): Promise<ApiResponseList<T>> {
+  const url = generateUrl(`${dataSourceType}/${dataSortType}`, {});
+  const data = fetchData<ApiResponseList<T>>(url);
 
   return data;
 }
