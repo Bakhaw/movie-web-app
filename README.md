@@ -39,10 +39,40 @@ Here are the instructions that will guide you to install and use the project.
   npm install
 ```
 
-3. Start the development server
+3. Don't forget to create .env file otherwise the app is not going to work
+
+4. Start the development server
 
 ```sh
   npm run dev
 ```
 
 The project is now running at http://localhost:3000/
+
+### Tests
+
+1. Run tests
+
+```sh
+ npm run test
+```
+
+2. Display coverage
+
+```sh
+ npm run coverage
+```
+
+### Build & Production mode
+
+1. Build the project in a production mode
+
+```sh
+ npm run build
+```
+
+2. Run the project in production mode
+
+```sh
+ npm start
+```
