@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { TV } from "@/types";
 
+import EmptyData from "../EmptyData";
 import ListContainer from "../ListContainer";
 import ListTitle from "../ListTitle";
 import Poster from "../Poster";
@@ -13,6 +14,8 @@ interface TvListProps {
 const TvList: React.FC<TvListProps> = ({ tv }) => (
   <div>
     <ListTitle>TV</ListTitle>
+
+    {tv.length === 0 && <EmptyData />}
 
     <ListContainer columnWidth={240}>
       {tv.map((tv) => (
