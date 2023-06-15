@@ -19,7 +19,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
   totalEpisodes,
   totalSeasons,
 }) => (
-  <table className="w-full">
+  <table>
     <tbody>
       <tr className="border-b-white border-b-[1px]">
         <td>Release date</td>
@@ -29,7 +29,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
       <tr className="border-b-white border-b-[1px]">
         <td>Genres</td>
         <td className="p-4">
-          <ul className="flex items-center gap-2">
+          <ul className="flex items-center flex-wrap gap-2">
             {genres?.map((genre) => (
               <li key={genre.id}>
                 <Chip>{genre.name}</Chip>
