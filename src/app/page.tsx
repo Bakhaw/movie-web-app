@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 import { getTrendingData } from "@/api";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -22,6 +22,44 @@ const Page: React.FC = () => {
   const [trendingMovies, setMovies] = useState<Movie[]>([]);
   const [trendingTv, setTv] = useState<TV[]>([]);
 
+  // Filter datas
+  const filteredMovies = trendingMovies.filter((movie) =>
+    searchText
+      ? movie.title.toLowerCase().includes(searchText.toLowerCase())
+      : null
+  );
+
+  const filteredTv = trendingTv.filter((tv) =>
+    searchText ? tv.name.toLowerCase().includes(searchText.toLowerCase()) : null
+  );
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!inputRef.current || !inputRef.current.value) {
+      setSearchText("");
+    } else {
+      setMovies(filteredMovies);
+      setTv(filteredTv);
+      setSearchText(inputRef.current.value);
+    }
+
+    return e;
+  }
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearchText(e.target.value);
+  }
+
+  function handleInputClear() {
+    if (!searchText || !inputRef.current) return;
+
+    setSearchText("");
+    setQueryParams({ search: "" });
+    inputRef.current.value = "";
+    inputRef.current.focus();
+  }
+
   async function initData() {
     const [trendingMovies, trendingTv] = await Promise.all([
       getTrendingData<Movie>(DataSourceType.movie),
@@ -32,31 +70,12 @@ const Page: React.FC = () => {
     setTv(trendingTv.results);
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    if (!inputRef.current || !inputRef.current.value) {
-      setSearchText("");
-    } else {
-      setSearchText(inputRef.current.value);
-    }
-
-    return e;
-  }
-
-  function clearInput() {
-    if (!searchText || !inputRef.current) return;
-
-    setSearchText("");
-    setQueryParams({ search: "" });
-    inputRef.current.value = "";
-    inputRef.current.focus();
-  }
-
   // Load Movies & TV data from the API
   useEffect(() => {
-    initData();
-  }, []);
+    if (trendingMovies.length === 0 || searchText === "") {
+      initData();
+    }
+  }, [searchText]);
 
   // Synchronize queryParams with input tag
   useEffect(() => {
@@ -72,27 +91,18 @@ const Page: React.FC = () => {
     inputRef.current.value = queryParams.search;
   }, [queryParams.search]);
 
-  // Filter datas
-  const filteredMovies = trendingMovies.filter((movie) =>
-    searchText
-      ? movie.title.toLowerCase().includes(searchText.toLowerCase())
-      : movie
-  );
-
-  const filteredTv = trendingTv.filter((tv) =>
-    searchText ? tv.name.toLowerCase().includes(searchText.toLowerCase()) : tv
-  );
-
   return (
     <main className="flex flex-col gap-12 p-6">
       <SearchForm
         inputRef={inputRef}
-        onClear={clearInput}
+        onClear={handleInputClear}
+        onInputChange={handleInputChange}
         onSubmit={handleSubmit}
+        resultsPlaceholder={[...filteredMovies, ...filteredTv]}
       />
 
-      <MovieList movies={filteredMovies} />
-      <TvList tv={filteredTv} />
+      <MovieList movies={trendingMovies} />
+      <TvList tv={trendingTv} />
     </main>
   );
 };

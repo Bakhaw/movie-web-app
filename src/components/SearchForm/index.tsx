@@ -8,7 +8,7 @@ import IconClose from "@/icons/IconClose";
 import SearchButton from "../SearchButton";
 
 interface SearchFormProps {
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onInputChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
@@ -16,7 +16,7 @@ interface SearchFormProps {
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({
-  onChange,
+  onInputChange,
   onClear,
   onSubmit,
   inputRef,
@@ -42,13 +42,13 @@ const SearchForm: React.FC<SearchFormProps> = ({
   return (
     <div>
       <form
-        className="flex flex-wrap justify-center items-center sm:justify-start gap-2"
+        className="flex justify-start items-center gap-2"
         onSubmit={handleSubmit}
       >
         <div className="flex justify-between items-center border-white border-b-[1px] placeholder:text-white">
           <input
-            className="h-10 w-full md:w-[260px] px-4 text-white bg-purple rounded-sm outline-none"
-            onChange={onChange}
+            className="h-10 w-[180px] md:w-[260px] px-4 text-white bg-purple rounded-sm outline-none"
+            onChange={onInputChange}
             onFocus={onInputFocus}
             ref={inputRef}
             placeholder="Search"
@@ -64,7 +64,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
       </form>
 
       {isPlaceholderVisible && (
-        <div className="absolute z-50 max-h-56 w-[298px] bg-white overflow-y-scroll">
+        <div className="absolute z-50 max-h-56 w-[218px] md:w-[298px] bg-white overflow-y-scroll">
           <ul className="flex flex-col gap-4 p-2 bg-grey">
             {resultsPlaceholder.map((result) => (
               <li
