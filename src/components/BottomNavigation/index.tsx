@@ -19,7 +19,7 @@ const BottomNavigation = () => {
         {routes.map((route) => (
           <li key={route.text}>
             <NavigationLink href={route.href}>
-              <div className="flex flex-col justify-center items-center h-14">
+              <div className="flex flex-col justify-center items-center h-14 w-20">
                 {route.icon}
                 <span>{route.text}</span>
               </div>

@@ -79,7 +79,7 @@ const Page: React.FC = () => {
 
   return (
     <main className="flex flex-col gap-12 p-6">
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-4 flex-wrap">
         <SearchForm
           inputRef={inputRef}
           onClear={clearInput}
