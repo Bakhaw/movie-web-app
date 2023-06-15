@@ -16,7 +16,7 @@ export const routes: NavigationLinkProps[] = [
     text: "Movies",
   },
   {
-    href: "/tv",
+    href: "/tvs",
     icon: <IconTv />,
     text: "TV",
   },

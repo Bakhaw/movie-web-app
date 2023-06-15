@@ -42,6 +42,11 @@ export interface TV {
   vote_count: number;
 }
 
+export enum DataSortType {
+  popular = "popular",
+  top_rated = "top_rated",
+}
+
 export enum DataSourceType {
   tv = "tv",
   movie = "movie",
