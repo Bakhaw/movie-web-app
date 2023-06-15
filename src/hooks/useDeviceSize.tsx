@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 
 // https://stackoverflow.com/a/68509243
+
+/**
+ * Custom hook to get the current width and height of the device window.
+ *
+ * @returns {Array} - Array containing the current width and height of the device window.
+ */
 const useDeviceSize = () => {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
