@@ -8,6 +8,7 @@ import { DataSortType, DataSourceType, Movie } from "@/types";
 
 import MovieList from "@/components/MovieList";
 import SearchForm from "@/components/SearchForm";
+import Select from "@/components/Select";
 
 interface QueryParams {
   search: string;
@@ -89,10 +90,10 @@ const Page: React.FC = () => {
           onSubmit={handleSubmit}
         />
 
-        <select onChange={handleSelectChange}>
-          <option value="popular">popular</option>
-          <option value="top_rated">top rated</option>
-        </select>
+        <Select
+          options={["popular", "top_rated"]}
+          onChange={handleSelectChange}
+        />
       </div>
 
       <MovieList movies={filteredMovies} />

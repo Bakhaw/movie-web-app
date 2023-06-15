@@ -7,6 +7,7 @@ import useQueryParams from "@/hooks/useQueryParams";
 import { DataSortType, DataSourceType, TV } from "@/types";
 
 import SearchForm from "@/components/SearchForm";
+import Select from "@/components/Select";
 import TvList from "@/components/TvList";
 
 interface QueryParams {
@@ -85,10 +86,10 @@ const Page: React.FC = () => {
           onSubmit={handleSubmit}
         />
 
-        <select onChange={handleSelectChange}>
-          <option value="popular">popular</option>
-          <option value="top_rated">top rated</option>
-        </select>
+        <Select
+          options={["popular", "top_rated"]}
+          onChange={handleSelectChange}
+        />
       </div>
 
       <TvList tv={filteredTv} />
