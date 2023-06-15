@@ -1,22 +1,23 @@
 import { ApiResponseList, DataSourceType, TimeWindow } from "@/types";
-import config from "@/config";
+import { fetchData } from "@/utils/fetchData";
+import { generateUrl } from "@/utils/generateUrl";
 
 export async function getTrendingData<T>(
   dataSourceType: DataSourceType,
   timeWindow: TimeWindow = TimeWindow.week
 ): Promise<ApiResponseList<T>> {
-  const url = `${config.TMDB_API_BASE_URL}/trending/${dataSourceType}/${timeWindow}?language=en-EN&api_key=${config.TMDB_API_KEY}`;
+  const url = generateUrl(`trending/${dataSourceType}/${timeWindow}`, {});
+  const data = fetchData<ApiResponseList<T>>(url);
 
-  const res = await fetch(url);
-  return res.json();
+  return data;
 }
 
 export async function getDataById<T>(
   dataSourceType: DataSourceType,
   id: string
 ): Promise<T> {
-  const url = `${config.TMDB_API_BASE_URL}/${dataSourceType}/${id}?language=en-EN&api_key=${config.TMDB_API_KEY}`;
+  const url = generateUrl(`${dataSourceType}/${id}`, {});
+  const data = fetchData<T>(url);
 
-  const res = await fetch(url);
-  return res.json();
+  return data;
 }
