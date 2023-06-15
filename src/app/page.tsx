@@ -85,10 +85,13 @@ const Page: React.FC = () => {
 
   return (
     <main className="flex flex-col gap-12 p-6">
-      <form className="flex gap-2" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-wrap justify-center items-center sm:justify-start gap-2"
+        onSubmit={handleSubmit}
+      >
         <div className="flex justify-between items-center border-grey border-[1px]">
           <input
-            className="h-10 w-[320px] px-4 text-white bg-purple rounded-sm outline-none"
+            className="h-10 w-full md:w-[260px] px-4 text-white bg-purple rounded-sm outline-none"
             ref={inputRef}
             placeholder="Search Movies or TV shows"
             type="text"
@@ -102,7 +105,9 @@ const Page: React.FC = () => {
           </button>
         </div>
 
-        <button className="h-10 px-4 bg-purple-light text-white">Search</button>
+        <button className="h-10 w-full sm:w-auto max-w-[245px] md:w-auto px-4 bg-purple-light text-white">
+          Search
+        </button>
       </form>
 
       <MovieList movies={filteredMovies} />
