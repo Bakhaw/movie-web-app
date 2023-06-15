@@ -3,6 +3,9 @@
 # env files
 .env
 
+# other
+.swc
+
 # dependencies
 /node_modules
 /.pnp
