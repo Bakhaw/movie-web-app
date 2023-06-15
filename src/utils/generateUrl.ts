@@ -11,7 +11,7 @@ export function generateUrl(
     )
     .join("&");
 
-  const url = `${config.TMDB_API_BASE_URL}/${endpoint}?${queryString}&language=en-EN&api_key=${config.TMDB_API_KEY}`;
+  const url = `${config.TMDB_API_BASE_URL}/${endpoint}?${queryString}&language=en-US&api_key=${config.TMDB_API_KEY}`;
 
   return url;
 }
