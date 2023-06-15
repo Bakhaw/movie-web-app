@@ -13,6 +13,7 @@ export interface Movie {
   genres: Genre[];
   homepage: string;
   id: number;
+  media_type: DataSourceType;
   original_language: string;
   overview: string;
   popularity?: number;
@@ -31,6 +32,7 @@ export interface TV {
   homepage: string;
   id: number;
   genres: Genre[];
+  media_type: DataSourceType;
   name: string;
   number_of_episodes: number;
   number_of_seasons: number;
