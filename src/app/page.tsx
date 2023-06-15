@@ -2,14 +2,13 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 
-import { DataSourceType, Movie, TV } from "@/types";
 import { getTrendingData } from "@/api";
 import useQueryParams from "@/hooks/useQueryParams";
+import { DataSourceType, Movie, TV } from "@/types";
 
 import MovieList from "@/components/MovieList";
+import SearchForm from "@/components/SearchForm";
 import TvList from "@/components/TvList";
-
-import IconClose from "@/icons/IconClose";
 
 interface QueryParams {
   search: string;
@@ -41,6 +40,7 @@ const Page: React.FC = () => {
     } else {
       setSearchText(inputRef.current.value);
     }
+
     return e;
   }
 
@@ -85,30 +85,11 @@ const Page: React.FC = () => {
 
   return (
     <main className="flex flex-col gap-12 p-6">
-      <form
-        className="flex flex-wrap justify-center items-center sm:justify-start gap-2"
+      <SearchForm
+        inputRef={inputRef}
+        onClear={clearInput}
         onSubmit={handleSubmit}
-      >
-        <div className="flex justify-between items-center border-grey border-[1px]">
-          <input
-            className="h-10 w-full md:w-[260px] px-4 text-white bg-purple rounded-sm outline-none"
-            ref={inputRef}
-            placeholder="Search Movies or TV shows"
-            type="text"
-          />
-
-          <button type="button">
-            <IconClose
-              className="text-sm text-white mr-2"
-              onClick={clearInput}
-            />
-          </button>
-        </div>
-
-        <button className="h-10 w-full sm:w-auto max-w-[245px] md:w-auto px-4 bg-purple-light text-white">
-          Search
-        </button>
-      </form>
+      />
 
       <MovieList movies={filteredMovies} />
       <TvList tv={filteredTv} />
