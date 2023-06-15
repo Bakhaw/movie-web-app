@@ -72,7 +72,11 @@ const Page: React.FC = () => {
 
   // Load Movies & TV data from the API
   useEffect(() => {
-    if (trendingMovies.length === 0 || searchText === "") {
+    if (
+      searchText === "" ||
+      trendingMovies.length === 0 ||
+      trendingTv.length === 0
+    ) {
       initData();
     }
   }, [searchText]);
@@ -82,7 +86,7 @@ const Page: React.FC = () => {
     if (!searchText) return;
 
     setQueryParams({ search: searchText });
-  }, [searchText]);
+  }, [searchText, setQueryParams]);
 
   useEffect(() => {
     if (!queryParams.search || !inputRef.current) return;

@@ -74,7 +74,7 @@ const Page: React.FC = () => {
     if (!searchText) return;
 
     setQueryParams({ search: searchText });
-  }, [searchText]);
+  }, [searchText, setQueryParams]);
 
   useEffect(() => {
     if (!queryParams.search || !inputRef.current) return;

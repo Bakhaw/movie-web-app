@@ -30,6 +30,8 @@ const SearchForm: React.FC<SearchFormProps> = ({
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
     setShowResultsPlaceholder(false);
     onSubmit(e);
   }
