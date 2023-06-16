@@ -1,6 +1,13 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { getTrendingData } from "@/api";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -23,14 +30,24 @@ const Page: React.FC = () => {
   const [trendingTv, setTv] = useState<TV[]>([]);
 
   // Filter datas
-  const filteredMovies = trendingMovies.filter((movie) =>
-    searchText
-      ? movie.title.toLowerCase().includes(searchText.toLowerCase())
-      : null
+  const filteredMovies = useMemo(
+    () =>
+      trendingMovies.filter((movie) =>
+        searchText
+          ? movie.title.toLowerCase().includes(searchText.toLowerCase())
+          : movie
+      ),
+    [searchText, trendingMovies]
   );
 
-  const filteredTv = trendingTv.filter((tv) =>
-    searchText ? tv.name.toLowerCase().includes(searchText.toLowerCase()) : null
+  const filteredTv = useMemo(
+    () =>
+      trendingTv.filter((tv) =>
+        searchText
+          ? tv.name.toLowerCase().includes(searchText.toLowerCase())
+          : tv
+      ),
+    [searchText, trendingTv]
   );
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -72,14 +89,8 @@ const Page: React.FC = () => {
 
   // Load Movies & TV data from the API
   useEffect(() => {
-    if (
-      searchText === "" ||
-      trendingMovies.length === 0 ||
-      trendingTv.length === 0
-    ) {
-      initData();
-    }
-  }, [searchText]);
+    initData();
+  }, []);
 
   // Synchronize queryParams with input tag
   useEffect(() => {
@@ -105,8 +116,8 @@ const Page: React.FC = () => {
         resultsPlaceholder={[...filteredMovies, ...filteredTv]}
       />
 
-      <MovieList movies={trendingMovies} />
-      <TvList tv={trendingTv} />
+      <MovieList movies={filteredMovies} />
+      <TvList tv={filteredTv} />
     </main>
   );
 };
