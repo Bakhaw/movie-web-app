@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, RefObject, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 
 import config from "@/config";
@@ -25,7 +32,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
   const [showResultsPlaceholder, setShowResultsPlaceholder] =
     useState<boolean>(false);
 
-  function onInputFocus() {
+  function handleInputFocus() {
     setShowResultsPlaceholder(true);
   }
 
@@ -36,10 +43,27 @@ const SearchForm: React.FC<SearchFormProps> = ({
     onSubmit(e);
   }
 
-  const isPlaceholderVisible =
-    resultsPlaceholder &&
-    resultsPlaceholder.length > 0 &&
-    showResultsPlaceholder;
+  const resultsPlaceholderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    /**
+     * Hide the results if clicked on outside of element
+     */
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        resultsPlaceholderRef.current &&
+        !resultsPlaceholderRef.current.contains(event.target as Node)
+      ) {
+        setShowResultsPlaceholder(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [resultsPlaceholderRef]);
 
   return (
     <div>
@@ -51,7 +75,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           <input
             className="h-10 w-[180px] md:w-[260px] px-4 text-white bg-purple rounded-sm outline-none"
             onChange={onInputChange}
-            onFocus={onInputFocus}
+            onFocus={handleInputFocus}
             ref={inputRef}
             placeholder="Search"
             type="text"
@@ -65,10 +89,13 @@ const SearchForm: React.FC<SearchFormProps> = ({
         <SearchButton />
       </form>
 
-      {isPlaceholderVisible && (
-        <div className="absolute z-50 max-h-56 w-[218px] md:w-[298px] bg-white overflow-y-scroll">
+      {showResultsPlaceholder && (
+        <div
+          className="absolute z-50 max-h-56 w-[218px] md:w-[298px] bg-white overflow-y-scroll"
+          ref={resultsPlaceholderRef}
+        >
           <ul className="flex flex-col gap-4 p-2 bg-grey">
-            {resultsPlaceholder.map((result) => (
+            {resultsPlaceholder?.map((result) => (
               <li
                 key={result.id}
                 className="bg-grey text-white hover:bg-purple-light/60"
