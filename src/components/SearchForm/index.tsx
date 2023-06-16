@@ -89,45 +89,47 @@ const SearchForm: React.FC<SearchFormProps> = ({
         <SearchButton />
       </form>
 
-      {showResultsPlaceholder && (
-        <div
-          className="absolute z-50 max-h-56 w-[218px] md:w-[298px] bg-white overflow-y-scroll"
-          ref={resultsPlaceholderRef}
-        >
-          <ul className="flex flex-col gap-4 p-2 bg-grey">
-            {resultsPlaceholder?.map((result) => (
-              <li
-                key={result.id}
-                className="bg-grey text-white hover:bg-purple-light/60"
-              >
-                <Link
-                  className="flex gap-2"
-                  href={`/${result.media_type}/${result.id}`}
+      {showResultsPlaceholder &&
+        resultsPlaceholder &&
+        resultsPlaceholder.length > 0 && (
+          <div
+            className="absolute z-50 max-h-56 w-[218px] md:w-[298px] bg-white overflow-y-scroll"
+            ref={resultsPlaceholderRef}
+          >
+            <ul className="flex flex-col gap-4 p-2 bg-grey">
+              {resultsPlaceholder?.map((result) => (
+                <li
+                  key={result.id}
+                  className="bg-grey text-white hover:bg-purple-light/60"
                 >
-                  <img
-                    alt="Poster"
-                    className="w-12"
-                    src={`${config.TMDB_IMAGE_BASE_URL}${result.poster_path}`}
-                  />
-                  <div className="text-sm">
-                    <p>{"title" in result && result.title}</p>
-                    <p>{"name" in result && result.name}</p>
+                  <Link
+                    className="flex gap-2"
+                    href={`/${result.media_type}/${result.id}`}
+                  >
+                    <img
+                      alt="Poster"
+                      className="w-12"
+                      src={`${config.TMDB_IMAGE_BASE_URL}${result.poster_path}`}
+                    />
+                    <div className="text-sm">
+                      <p>{"title" in result && result.title}</p>
+                      <p>{"name" in result && result.name}</p>
 
-                    <p>
-                      {"release_date" in result &&
-                        new Date(result.release_date).getFullYear()}
-                    </p>
-                    <p>
-                      {"first_air_date" in result &&
-                        new Date(result.first_air_date).getFullYear()}
-                    </p>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+                      <p>
+                        {"release_date" in result &&
+                          new Date(result.release_date).getFullYear()}
+                      </p>
+                      <p>
+                        {"first_air_date" in result &&
+                          new Date(result.first_air_date).getFullYear()}
+                      </p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
     </div>
   );
 };
