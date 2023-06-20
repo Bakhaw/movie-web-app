@@ -97,6 +97,9 @@ const Page: React.FC = () => {
     [currentMovies, searchText]
   );
 
+  const moviesListTitle =
+    sortType === DataSortType.popular ? "Popular movies" : "Top rated movies";
+
   return (
     <main className="flex flex-col gap-12 p-6">
       <div className="flex justify-between gap-4 flex-wrap">
@@ -112,7 +115,7 @@ const Page: React.FC = () => {
         />
       </div>
 
-      <MovieList movies={filteredMovies} />
+      <MovieList listTitle={moviesListTitle} movies={filteredMovies} />
     </main>
   );
 };

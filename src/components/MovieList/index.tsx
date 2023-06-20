@@ -1,31 +1,42 @@
 import Link from "next/link";
 
+import config from "@/config";
+import { getFullYear } from "@/lib/utils";
 import { Movie } from "@/types";
 
 import EmptyData from "../EmptyData";
-import ListContainer from "../ListContainer";
 import ListTitle from "../ListTitle";
 import Poster from "../Poster";
 
 interface MovieListProps {
+  listTitle: string;
   movies: Movie[];
 }
 
-const MovieList: React.FC<MovieListProps> = ({ movies }) => (
+const MovieList: React.FC<MovieListProps> = ({ listTitle, movies }) => (
   <div>
-    <ListTitle>Movies</ListTitle>
+    <ListTitle>{listTitle}</ListTitle>
 
     {movies.length === 0 && <EmptyData />}
 
-    <ListContainer columnWidth={240}>
+    <ul className="flex flex-wrap items-start justify-between">
       {movies.map((movie) => (
-        <li key={movie.id}>
+        <li
+          key={movie.id}
+          className="p-2 flex-[100%] sm:flex-[50%] lg:flex-[25%] xl:flex-[20%]"
+        >
           <Link href={`/movie/${movie.id}`}>
-            <Poster src={movie.poster_path} title={movie.title} />
+            <Poster
+              src={`${config.TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
+              subtitle={getFullYear(movie.release_date)}
+              title={movie.title}
+              height={1080}
+              width={1920}
+            />
           </Link>
         </li>
       ))}
-    </ListContainer>
+    </ul>
   </div>
 );
 
