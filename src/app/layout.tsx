@@ -1,7 +1,11 @@
+"use client";
+
+import { ThemeProvider } from "next-themes";
+
+import "../styles/globals.css";
+
 import BottomNavigation from "@/components/BottomNavigation";
 import LeftNavigation from "@/components/LeftNavigation";
-
-import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -11,17 +15,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col md:flex-row">
-        <div className="hidden md:flex">
-          <LeftNavigation />
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="hidden md:flex">
+            <LeftNavigation />
+          </div>
 
-        <div className="min-h-screen w-full pb-[64px] md:pb-0 bg-purple">
-          {children}
-        </div>
+          <div className="min-h-screen w-full pb-[64px] md:pb-0 bg-purple">
+            {children}
+          </div>
 
-        <div className="md:hidden">
-          <BottomNavigation />
-        </div>
+          <div className="md:hidden">
+            <BottomNavigation />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
