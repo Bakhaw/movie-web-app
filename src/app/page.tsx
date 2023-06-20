@@ -116,8 +116,8 @@ const Page: React.FC = () => {
         resultsPlaceholder={[...filteredMovies, ...filteredTv]}
       />
 
-      <MovieList movies={filteredMovies} />
-      <TvList tv={filteredTv} />
+      <MovieList listTitle="Trending movies" movies={filteredMovies} />
+      <TvList listTitle="Trending TV" tv={filteredTv} />
     </main>
   );
 };
