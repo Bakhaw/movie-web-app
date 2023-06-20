@@ -1,10 +1,10 @@
-import { DataSourceType, TV } from "@/types";
 import { getDataById } from "@/api";
-import config from "@/config";
+import { getFullImgPath } from "@/lib/utils";
+import { DataSourceType, TV } from "@/types";
 
-import Poster from "@/components/Poster";
 import Bio from "@/components/Bio";
 import DetailsTable from "@/components/DetailsTable";
+import Poster from "@/components/Poster";
 
 interface PageProps {
   params: {
@@ -19,25 +19,26 @@ async function Page({ params }: PageProps) {
     <div
       className="flex flex-col justify-end min-h-[calc(100vh-64px)] md:min-h-screen text-white"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%), url(${config.TMDB_IMAGE_BASE_URL}${tv.backdrop_path})`,
+        backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%), url(${getFullImgPath(
+          tv.backdrop_path
+        )})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
     >
       <div className="flex flex-col lg:flex-row justify-start items-start gap-6 h-[60vh] p-6 bg-purple-dark/70 border-orange border-t-8 overflow-y-scroll">
-        <div className="hidden lg:inline">
+        <div className="hidden lg:flex flex-col gap-2">
           <Poster
-            disableHover
-            src={tv.poster_path}
-            title={
-              <div className="flex items-center gap-4">
-                <div className="flex justify-center items-center h-14 w-14 text-lg font-bold border-orange border-2 rounded-full">
-                  {Math.round(tv.vote_average * 100) / 100}
-                </div>
-                <span className="block">{tv.vote_count} votes</span>
-              </div>
-            }
+            height={360}
+            width={240}
+            src={getFullImgPath(tv.poster_path)}
           />
+          <div className="flex items-center gap-4">
+            <div className="flex justify-center items-center h-14 w-14 text-lg font-bold border-orange border-2 rounded-full">
+              {Math.round(tv.vote_average * 100) / 100}
+            </div>
+            <span className="block">{tv.vote_count} votes</span>
+          </div>
         </div>
 
         <div className="w-full">

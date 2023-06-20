@@ -9,7 +9,7 @@ export interface Genre {
 }
 
 export interface Movie {
-  backdrop_path?: string;
+  backdrop_path: string;
   genres: Genre[];
   homepage: string;
   id: number;

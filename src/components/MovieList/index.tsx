@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-import config from "@/config";
-import { getFullYear } from "@/lib/utils";
+import { getFullImgPath, getFullYear } from "@/lib/utils";
 import { Movie } from "@/types";
 
 import EmptyData from "../EmptyData";
@@ -27,7 +26,7 @@ const MovieList: React.FC<MovieListProps> = ({ listTitle, movies }) => (
         >
           <Link href={`/movie/${movie.id}`}>
             <Poster
-              src={`${config.TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
+              src={`${getFullImgPath(movie.poster_path)}`}
               subtitle={getFullYear(movie.release_date)}
               title={movie.title}
               height={1080}

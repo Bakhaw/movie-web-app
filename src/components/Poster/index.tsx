@@ -23,7 +23,10 @@ const Poster: React.FC<PosterProps> = ({
     <div className="overflow-hidden rounded-md">
       <Image
         alt={`${title} poster`}
-        className="h-auto w-auto object-cover transition-all hover:scale-105 aspect-[2/3]"
+        className={cn(
+          "h-auto w-auto object-cover transition-all hover:scale-105 aspect-[2/3]",
+          className
+        )}
         src={src}
         width={width}
         height={height}

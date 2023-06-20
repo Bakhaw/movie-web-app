@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-import config from "@/config";
-import { getFullYear } from "@/lib/utils";
+import { getFullImgPath, getFullYear } from "@/lib/utils";
 import { TV } from "@/types";
 
 import EmptyData from "../EmptyData";
@@ -27,7 +26,7 @@ const TvList: React.FC<TvListProps> = ({ listTitle, tv }) => (
         >
           <Link href={`/tv/${tv.id}`}>
             <Poster
-              src={`${config.TMDB_IMAGE_BASE_URL}${tv.poster_path}`}
+              src={`${getFullImgPath(tv.poster_path)}`}
               subtitle={getFullYear(tv.first_air_date)}
               title={tv.name}
               height={1080}

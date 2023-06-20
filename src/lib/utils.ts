@@ -11,6 +11,10 @@ export function getFullYear(date: string) {
   return new Date(date).getFullYear().toString();
 }
 
+export function getFullImgPath(imgPath: string) {
+  return `${config.TMDB_IMAGE_BASE_URL}${imgPath}`;
+}
+
 export async function fetchData<T>(url: string): Promise<T> {
   try {
     const res = await fetch(url);
