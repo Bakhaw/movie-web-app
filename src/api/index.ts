@@ -1,11 +1,10 @@
+import { fetchData, generateUrl } from "@/lib/utils";
 import {
   ApiResponseList,
   DataSortType,
   DataSourceType,
   TimeWindow,
 } from "@/types";
-import { fetchData } from "@/utils/fetchData";
-import { generateUrl } from "@/utils/generateUrl";
 
 /**
  * Fetches trending data from a specified data source for a given time window.
