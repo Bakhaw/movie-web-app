@@ -18,11 +18,11 @@ const MovieList: React.FC<MovieListProps> = ({ listTitle, movies }) => (
 
     {movies.length === 0 && <EmptyData />}
 
-    <ul className="flex flex-wrap items-start justify-between">
+    <ul className="flex flex-wrap items-start">
       {movies.map((movie) => (
         <li
           key={movie.id}
-          className="p-2 flex-[100%] sm:flex-[50%] lg:flex-[25%] xl:flex-[20%]"
+          className="p-2 w-[100%] sm:w-[50%] lg:w-[25%] xl:w-[20%]"
         >
           <Link href={`/movie/${movie.id}`}>
             <Poster
