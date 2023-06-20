@@ -97,6 +97,9 @@ const Page: React.FC = () => {
     [currentTv, searchText]
   );
 
+  const tvsListTitle =
+    sortType === DataSortType.popular ? "Popular TV" : "Top rated TV";
+
   return (
     <main className="flex flex-col gap-12 p-6">
       <div className="flex justify-between gap-4 flex-wrap">
@@ -112,7 +115,7 @@ const Page: React.FC = () => {
         />
       </div>
 
-      <TvList tv={filteredTv} />
+      <TvList listTitle={tvsListTitle} tv={filteredTv} />
     </main>
   );
 };
