@@ -1,21 +1,21 @@
 "use client";
 
-import {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import { getDataByType } from "@/api";
 import useQueryParams from "@/hooks/useQueryParams";
 import { DataSortType, DataSourceType, Movie } from "@/types";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import MovieList from "@/components/MovieList";
 import SearchForm from "@/components/SearchForm";
-import Select from "@/components/Select";
 
 interface QueryParams {
   search: string;
@@ -60,8 +60,8 @@ const Page: React.FC = () => {
     inputRef.current.focus();
   }
 
-  function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
-    setSortType(e.target.value as DataSortType);
+  function handleSelectChange(value: string) {
+    setSortType(value as DataSortType);
   }
 
   // Load Movies data from the API
@@ -98,11 +98,11 @@ const Page: React.FC = () => {
   );
 
   const moviesListTitle =
-    sortType === DataSortType.popular ? "Popular movies" : "Top rated movies";
+    sortType === DataSortType.popular ? "Popular" : "Top rated";
 
   return (
     <main className="flex flex-col gap-12 p-6">
-      <div className="flex justify-between gap-4 flex-wrap">
+      <div className="flex items-end justify-between gap-4 flex-wrap">
         <SearchForm
           inputRef={inputRef}
           onClear={clearInput}
@@ -110,9 +110,17 @@ const Page: React.FC = () => {
         />
 
         <Select
-          options={["popular", "top_rated"]}
-          onChange={handleSelectChange}
-        />
+          defaultValue={DataSortType.popular}
+          onValueChange={handleSelectChange}
+        >
+          <SelectTrigger className="w-28">
+            <SelectValue placeholder="Filter" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={DataSortType.popular}>Popular</SelectItem>
+            <SelectItem value={DataSortType.top_rated}>Top rated</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <MovieList listTitle={moviesListTitle} movies={filteredMovies} />
