@@ -8,11 +8,16 @@ import {
 } from "react";
 import Link from "next/link";
 
-import config from "@/config";
+import { getFullImgPath } from "@/lib/utils";
 import { Movie, TV } from "@/types";
 
-import IconClose from "@/icons/IconClose";
-import SearchButton from "../SearchButton";
+import { Input } from "../ui/input";
+
+import { ScrollArea } from "../ui/scroll-area";
+import { Label } from "../ui/label";
+import { Button } from "../ui/button";
+
+import Poster from "../Poster";
 
 interface SearchFormProps {
   onInputChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -68,35 +73,37 @@ const SearchForm: React.FC<SearchFormProps> = ({
   return (
     <div>
       <form
-        className="flex justify-start items-center gap-2"
+        className="flex flex-col md:flex-row justify-start items-start gap-2"
         onSubmit={handleSubmit}
       >
-        <div className="flex justify-between items-center border-white border-b-[1px] placeholder:text-white">
-          <input
-            className="h-10 w-[180px] md:w-[260px] px-4 text-white bg-purple rounded-sm outline-none"
-            onChange={onInputChange}
-            onFocus={handleInputFocus}
-            ref={inputRef}
-            placeholder="Search"
-            type="text"
-          />
-
-          <button type="button">
-            <IconClose className="text-sm text-white mr-2" onClick={onClear} />
-          </button>
+        <div className="md:hidden">
+          <Label htmlFor="search">Search Movies & TV shows</Label>
         </div>
 
-        <SearchButton />
+        <Input
+          id="search"
+          className="w-full md:w-[298px]"
+          onChange={onInputChange}
+          onFocus={handleInputFocus}
+          placeholder="Black Mirror"
+          ref={inputRef}
+        />
+
+        <div className="hidden md:block">
+          <Button size="sm" variant="default">
+            Search
+          </Button>
+        </div>
       </form>
 
       {showResultsPlaceholder &&
         resultsPlaceholder &&
         resultsPlaceholder.length > 0 && (
-          <div
-            className="absolute z-50 max-h-56 w-[218px] md:w-[298px] bg-white overflow-y-scroll"
+          <ScrollArea
+            className="!absolute !z-50 h-56 w-[calc(100%-48px)] md:w-[298px] rounded-md border p-4 bg-background"
             ref={resultsPlaceholderRef}
           >
-            <ul className="flex flex-col gap-4 p-2 bg-grey">
+            <ul className="flex flex-col gap-4">
               {resultsPlaceholder?.map((result) => (
                 <li
                   key={result.id}
@@ -106,10 +113,10 @@ const SearchForm: React.FC<SearchFormProps> = ({
                     className="flex gap-2"
                     href={`/${result.media_type}/${result.id}`}
                   >
-                    <img
-                      alt="Poster"
-                      className="w-12"
-                      src={`${config.TMDB_IMAGE_BASE_URL}${result.poster_path}`}
+                    <Poster
+                      height={72}
+                      width={48}
+                      src={getFullImgPath(result.poster_path)}
                     />
                     <div className="text-sm">
                       <p>{"title" in result && result.title}</p>
@@ -128,7 +135,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
                 </li>
               ))}
             </ul>
-          </div>
+          </ScrollArea>
         )}
     </div>
   );
