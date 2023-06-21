@@ -16,26 +16,28 @@ const MovieList: React.FC<MovieListProps> = ({ listTitle, movies }) => (
   <div>
     <ListTitle>{listTitle}</ListTitle>
 
-    {movies.length === 0 && <EmptyData />}
-
-    <ul className="flex flex-wrap items-start">
-      {movies.map((movie) => (
-        <li
-          key={movie.id}
-          className="p-2 w-[100%] sm:w-[50%] lg:w-[25%] xl:w-[20%]"
-        >
-          <Link href={`/movie/${movie.id}`}>
-            <Poster
-              src={`${getFullImgPath(movie.poster_path)}`}
-              subtitle={getFullYear(movie.release_date)}
-              title={movie.title}
-              height={1080}
-              width={1920}
-            />
-          </Link>
-        </li>
-      ))}
-    </ul>
+    {movies.length === 0 ? (
+      <EmptyData />
+    ) : (
+      <ul className="flex flex-wrap items-start">
+        {movies.map((movie) => (
+          <li
+            key={movie.id}
+            className="p-2 w-[100%] sm:w-[50%] lg:w-[25%] xl:w-[20%]"
+          >
+            <Link href={`/movie/${movie.id}`}>
+              <Poster
+                src={`${getFullImgPath(movie.poster_path)}`}
+                subtitle={getFullYear(movie.release_date)}
+                title={movie.title}
+                height={1080}
+                width={1920}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    )}
   </div>
 );
 
