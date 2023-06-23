@@ -21,10 +21,7 @@ const TvList: React.FC<TvListProps> = ({ listTitle, tv }) => (
     ) : (
       <ul className="flex flex-wrap items-start">
         {tv.map((tv) => (
-          <li
-            key={tv.id}
-            className="p-2 w-[100%] sm:w-[50%] lg:w-[25%] xl:w-[20%]"
-          >
+          <li key={tv.id} className="p-2 w-[50%] lg:w-[25%] xl:w-[20%]">
             <Link href={`/tv/${tv.id}`}>
               <Poster
                 src={`${getFullImgPath(tv.poster_path)}`}

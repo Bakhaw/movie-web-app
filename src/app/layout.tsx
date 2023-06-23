@@ -7,6 +7,8 @@ import "../styles/globals.css";
 import BottomNavigation from "@/components/BottomNavigation";
 import Sidebar from "@/components/Sidebar";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 export default function RootLayout({
   children,
 }: {
@@ -20,9 +22,7 @@ export default function RootLayout({
             <Sidebar />
           </div>
 
-          <div className="min-h-screen w-full pb-[64px] md:pb-0 bg-purple">
-            {children}
-          </div>
+          <ScrollArea className="h-screen w-full">{children}</ScrollArea>
 
           <div className="md:hidden">
             <BottomNavigation />
