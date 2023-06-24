@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "../styles/globals.css";
 
@@ -14,20 +15,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const queryClient = new QueryClient();
+
   return (
     <html lang="en">
       <body className="flex flex-col md:flex-row">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="hidden md:flex">
-            <Sidebar />
-          </div>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="hidden md:flex">
+              <Sidebar />
+            </div>
 
-          <ScrollArea className="h-screen w-full">{children}</ScrollArea>
+            <ScrollArea className="h-screen w-full">{children}</ScrollArea>
 
-          <div className="md:hidden">
-            <BottomNavigation />
-          </div>
-        </ThemeProvider>
+            <div className="md:hidden">
+              <BottomNavigation />
+            </div>
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

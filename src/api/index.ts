@@ -47,7 +47,7 @@ export async function getDataById<T>(
  * @param dataSortType - The sorting type of the data (e.g., "popular", "top_rated").
  * @returns {Promise<ApiResponseList<T>>} - A Promise that resolves to the fetched data.
  */
-export async function getDataByType<T>(
+export function getDataByType<T>(
   dataSourceType: DataSourceType,
   dataSortType: DataSortType
 ): Promise<ApiResponseList<T>> {
