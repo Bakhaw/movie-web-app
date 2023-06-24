@@ -24,7 +24,7 @@ function Sidebar() {
                   size="sm"
                   className="w-full justify-start"
                 >
-                  {route.icon}
+                  <div className="mr-2">{route.icon}</div>
                   <span>{route.text}</span>
                 </Button>
               </Link>

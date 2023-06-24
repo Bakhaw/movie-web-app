@@ -19,9 +19,9 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({ children, href }) => {
     <Link
       href={href}
       className={classNames(
-        "block w-full text-sm md:text-base capitalize hover:text-orange",
+        "block text-sm md:text-base capitalize hover:text-orange",
         isActive &&
-          "font-bold  ml-4 border-t-4 md:border-r-4 md:border-t-0 border-orange",
+          "font-bold ml-4 border-t-4 md:border-r-4 md:border-t-0 border-orange",
         isActive ? "text-orange" : "text-white" // ternary here otherwise it's not possible to swap out for the right color due to CSS "colors" declaration order
       )}
     >
