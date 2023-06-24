@@ -14,7 +14,7 @@ const BottomNavigation = () => {
   if (isMdScreen) return null;
 
   return (
-    <div className="fixed bottom-0 w-full h-16 bg-purple-dark text-white">
+    <div className="fixed bottom-0 w-full h-16 bg-background text-white">
       <ul className="flex justify-around items-center gap-6 h-full">
         {routes.map((route) => (
           <li key={route.text}>

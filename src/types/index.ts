@@ -9,7 +9,7 @@ export interface Genre {
 }
 
 export interface Movie {
-  backdrop_path?: string;
+  backdrop_path: string;
   genres: Genre[];
   homepage: string;
   id: number;
@@ -23,7 +23,11 @@ export interface Movie {
   title: string;
   video?: boolean;
   vote_average: number;
-  vote_count?: number;
+  vote_count: number;
+}
+
+export interface QueryParams {
+  search: string;
 }
 
 export interface TV {

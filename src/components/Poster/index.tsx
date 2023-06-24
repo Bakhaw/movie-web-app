@@ -1,42 +1,47 @@
 import Image from "next/image";
-import classNames from "classnames";
 
-import config from "@/config";
+import { cn } from "@/lib/utils";
 
-interface PosterProps {
-  disableHover?: boolean; // default false
+interface PosterProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string;
-  title: React.ReactNode;
+  subtitle?: string;
+  title?: string;
+  width: number;
+  height: number;
 }
 
 const Poster: React.FC<PosterProps> = ({
-  disableHover = false,
+  className,
   src,
+  subtitle,
   title,
+  width,
+  height,
+  ...props
 }) => (
-  <div className="group w-fit">
-    <div className="relative w-[240px] aspect-[2/3]">
+  <div className={cn("space-y-3", className)} {...props}>
+    <div className="overflow-hidden rounded-md">
       <Image
-        className={classNames(
-          `object-cover border-8 bg-purple-dark border-purple-grey`,
-          !disableHover && "group-hover:border-orange"
+        alt={`${title} poster`}
+        className={cn(
+          "h-auto w-auto object-cover transition-all hover:scale-105 aspect-[2/3]",
+          className
         )}
-        alt="Poster"
-        src={`${config.TMDB_IMAGE_BASE_URL}${src}`}
-        sizes="(max-width: 768px) 100vw"
-        fill
-        priority
+        src={src}
+        width={width}
+        height={height}
       />
     </div>
 
-    <h1
-      className={classNames(
-        "mt-2 text-center text-white text-sm md:text-base",
-        !disableHover && "group-hover:text-orange"
-      )}
-    >
-      {title}
-    </h1>
+    {(title || subtitle) && (
+      <div className="space-y-1 text-sm">
+        {title && <h3 className="font-medium leading-none">{title}</h3>}
+
+        {subtitle && (
+          <p className="text-xs text-muted-foreground">{subtitle}</p>
+        )}
+      </div>
+    )}
   </div>
 );
 

@@ -1,31 +1,40 @@
 import Link from "next/link";
 
+import { getFullImgPath, getFullYear } from "@/lib/utils";
 import { Movie } from "@/types";
 
 import EmptyData from "../EmptyData";
-import ListContainer from "../ListContainer";
 import ListTitle from "../ListTitle";
 import Poster from "../Poster";
 
 interface MovieListProps {
-  movies: Movie[];
+  listTitle: string;
+  movies?: Movie[];
 }
 
-const MovieList: React.FC<MovieListProps> = ({ movies }) => (
+const MovieList: React.FC<MovieListProps> = ({ listTitle, movies }) => (
   <div>
-    <ListTitle>Movies</ListTitle>
+    <ListTitle>{listTitle}</ListTitle>
 
-    {movies.length === 0 && <EmptyData />}
-
-    <ListContainer columnWidth={240}>
-      {movies.map((movie) => (
-        <li key={movie.id}>
-          <Link href={`/movie/${movie.id}`}>
-            <Poster src={movie.poster_path} title={movie.title} />
-          </Link>
-        </li>
-      ))}
-    </ListContainer>
+    {movies?.length === 0 ? (
+      <EmptyData />
+    ) : (
+      <ul className="flex flex-wrap items-start">
+        {movies?.map((movie) => (
+          <li key={movie.id} className="p-2 w-[50%] lg:w-[25%] xl:w-[20%]">
+            <Link href={`/movie/${movie.id}`}>
+              <Poster
+                src={`${getFullImgPath(movie.poster_path)}`}
+                subtitle={getFullYear(movie.release_date)}
+                title={movie.title}
+                height={1080}
+                width={1920}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    )}
   </div>
 );
 

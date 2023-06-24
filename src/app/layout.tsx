@@ -1,27 +1,38 @@
-import BottomNavigation from "@/components/BottomNavigation";
-import LeftNavigation from "@/components/LeftNavigation";
+"use client";
 
-import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import "../styles/globals.css";
+
+import BottomNavigation from "@/components/BottomNavigation";
+import Sidebar from "@/components/Sidebar";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const queryClient = new QueryClient();
+
   return (
     <html lang="en">
       <body className="flex flex-col md:flex-row">
-        <div className="hidden md:flex">
-          <LeftNavigation />
-        </div>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="hidden md:flex">
+              <Sidebar />
+            </div>
 
-        <div className="min-h-screen w-full pb-[64px] md:pb-0 bg-purple">
-          {children}
-        </div>
+            <ScrollArea className="h-screen w-full">{children}</ScrollArea>
 
-        <div className="md:hidden">
-          <BottomNavigation />
-        </div>
+            <div className="md:hidden">
+              <BottomNavigation />
+            </div>
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

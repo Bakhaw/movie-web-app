@@ -1,23 +1,21 @@
-import { NavigationLinkProps } from "@/components/NavigationLink";
+import { Clapperboard, Flame, Popcorn } from "lucide-react";
 
-import IconMovie from "@/icons/IconMovie";
-import IconTrendingUp from "@/icons/IconTrendingUp";
-import IconTv from "@/icons/IconTv";
+import { NavigationLinkProps } from "@/components/NavigationLink";
 
 export const routes: NavigationLinkProps[] = [
   {
     href: "/",
-    icon: <IconTrendingUp />,
+    icon: <Flame className="mr-2 h-4 w-4" />,
     text: "Trending",
   },
   {
     href: "/movies",
-    icon: <IconMovie />,
+    icon: <Clapperboard className="mr-2 h-4 w-4" />,
     text: "Movies",
   },
   {
     href: "/tvs",
-    icon: <IconTv />,
+    icon: <Popcorn className="mr-2 h-4 w-4" />,
     text: "TV",
   },
 ];

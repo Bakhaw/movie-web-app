@@ -1,31 +1,40 @@
 import Link from "next/link";
 
+import { getFullImgPath, getFullYear } from "@/lib/utils";
 import { TV } from "@/types";
 
 import EmptyData from "../EmptyData";
-import ListContainer from "../ListContainer";
 import ListTitle from "../ListTitle";
 import Poster from "../Poster";
 
 interface TvListProps {
-  tv: TV[];
+  listTitle: string;
+  tvs?: TV[];
 }
 
-const TvList: React.FC<TvListProps> = ({ tv }) => (
+const TvList: React.FC<TvListProps> = ({ listTitle, tvs }) => (
   <div>
-    <ListTitle>TV</ListTitle>
+    <ListTitle>{listTitle}</ListTitle>
 
-    {tv.length === 0 && <EmptyData />}
-
-    <ListContainer columnWidth={240}>
-      {tv.map((tv) => (
-        <li key={tv.id}>
-          <Link href={`/tv/${tv.id}`}>
-            <Poster src={tv.poster_path} title={tv.name} />
-          </Link>
-        </li>
-      ))}
-    </ListContainer>
+    {tvs?.length === 0 ? (
+      <EmptyData />
+    ) : (
+      <ul className="flex flex-wrap items-start">
+        {tvs?.map((tv) => (
+          <li key={tv.id} className="p-2 w-[50%] lg:w-[25%] xl:w-[20%]">
+            <Link href={`/tv/${tv.id}`}>
+              <Poster
+                src={`${getFullImgPath(tv.poster_path)}`}
+                subtitle={getFullYear(tv.first_air_date)}
+                title={tv.name}
+                height={1080}
+                width={1920}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    )}
   </div>
 );
 

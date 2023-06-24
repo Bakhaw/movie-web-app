@@ -3,7 +3,7 @@ interface ListTitleProps {
 }
 
 const ListTitle: React.FC<ListTitleProps> = ({ children }) => (
-  <h1 className="text-center text-white text-2xl bg-purple-light py-4 mb-8">
+  <h1 className="py-4 mb-6 text-2xl font-semibold tracking-tight">
     {children}
   </h1>
 );
