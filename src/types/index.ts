@@ -26,6 +26,10 @@ export interface Movie {
   vote_count: number;
 }
 
+export interface QueryParams {
+  search: string;
+}
+
 export interface TV {
   backdrop_path: string;
   first_air_date: string;
