@@ -1,80 +1,48 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import Link from "next/link";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
-import { getFullImgPath } from "@/lib/utils";
-import { Movie, TV } from "@/types";
+import useQueryParams from "@/hooks/useQueryParams";
+import { Movie, QueryParams, TV } from "@/types";
 
-import { Input } from "../ui/input";
+import SearchResults from "../SearchResults";
 
-import { ScrollArea } from "../ui/scroll-area";
-import { Label } from "../ui/label";
 import { Button } from "../ui/button";
-
-import Poster from "../Poster";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 interface SearchFormProps {
-  onInputChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  inputRef: RefObject<HTMLInputElement>;
-  resultsPlaceholder?: (Movie | TV)[];
+  searchResults: (Movie | TV)[];
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({
-  onInputChange,
-  onClear,
-  onSubmit,
-  inputRef,
-  resultsPlaceholder,
-}) => {
-  const [showResultsPlaceholder, setShowResultsPlaceholder] =
-    useState<boolean>(false);
+const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
-  function handleInputFocus() {
-    setShowResultsPlaceholder(true);
+  const { queryParams, setQueryParams } = useQueryParams<QueryParams>();
+
+  function hideSearchResults() {
+    setShowSearchResults(false);
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function onInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setQueryParams({ search: e.target.value });
+  }
+
+  function onInputFocus() {
+    setShowSearchResults(true);
+  }
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setShowResultsPlaceholder(false);
-    onSubmit(e);
+    setShowSearchResults(false);
+    setQueryParams({ search: inputRef?.current?.value });
   }
-
-  const resultsPlaceholderRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    /**
-     * Hide the results if clicked on outside of element
-     */
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        resultsPlaceholderRef.current &&
-        !resultsPlaceholderRef.current.contains(event.target as Node)
-      ) {
-        setShowResultsPlaceholder(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [resultsPlaceholderRef]);
 
   return (
     <div>
       <form
         className="flex flex-col md:flex-row justify-start items-start gap-2"
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       >
         <div className="md:hidden">
           <Label htmlFor="search">Search Movies & TV shows</Label>
@@ -83,8 +51,9 @@ const SearchForm: React.FC<SearchFormProps> = ({
         <Input
           id="search"
           className="w-full md:w-[298px]"
+          defaultValue={queryParams.search}
           onChange={onInputChange}
-          onFocus={handleInputFocus}
+          onFocus={onInputFocus}
           placeholder="Black Mirror"
           ref={inputRef}
         />
@@ -96,47 +65,11 @@ const SearchForm: React.FC<SearchFormProps> = ({
         </div>
       </form>
 
-      {showResultsPlaceholder &&
-        resultsPlaceholder &&
-        resultsPlaceholder.length > 0 && (
-          <ScrollArea
-            className="!absolute !z-50 h-56 w-[calc(100%-48px)] md:w-[298px] rounded-md border p-4 bg-background"
-            ref={resultsPlaceholderRef}
-          >
-            <ul className="flex flex-col gap-4">
-              {resultsPlaceholder?.map((result) => (
-                <li
-                  key={result.id}
-                  className="bg-grey text-white hover:bg-purple-light/60"
-                >
-                  <Link
-                    className="flex gap-2"
-                    href={`/${result.media_type}/${result.id}`}
-                  >
-                    <Poster
-                      height={72}
-                      width={48}
-                      src={getFullImgPath(result.poster_path)}
-                    />
-                    <div className="text-sm">
-                      <p>{"title" in result && result.title}</p>
-                      <p>{"name" in result && result.name}</p>
-
-                      <p>
-                        {"release_date" in result &&
-                          new Date(result.release_date).getFullYear()}
-                      </p>
-                      <p>
-                        {"first_air_date" in result &&
-                          new Date(result.first_air_date).getFullYear()}
-                      </p>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </ScrollArea>
-        )}
+      <SearchResults
+        onClickOutside={hideSearchResults}
+        results={searchResults}
+        visible={showSearchResults}
+      />
     </div>
   );
 };
