@@ -9,18 +9,18 @@ import Poster from "../Poster";
 
 interface MovieListProps {
   listTitle: string;
-  movies: Movie[];
+  movies?: Movie[];
 }
 
 const MovieList: React.FC<MovieListProps> = ({ listTitle, movies }) => (
   <div>
     <ListTitle>{listTitle}</ListTitle>
 
-    {movies.length === 0 ? (
+    {movies?.length === 0 ? (
       <EmptyData />
     ) : (
       <ul className="flex flex-wrap items-start">
-        {movies.map((movie) => (
+        {movies?.map((movie) => (
           <li key={movie.id} className="p-2 w-[50%] lg:w-[25%] xl:w-[20%]">
             <Link href={`/movie/${movie.id}`}>
               <Poster
