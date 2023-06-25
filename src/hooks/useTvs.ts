@@ -19,12 +19,12 @@ function useTvs(queryType: DataSortType) {
     [DataSortType.top_rated]: getTopRatedTvs,
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["tvs", queryType],
     queryFn: queryObj[queryType],
   });
 
-  return data;
+  return { data, isLoading };
 }
 
 export default useTvs;

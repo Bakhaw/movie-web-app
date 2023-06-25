@@ -22,12 +22,12 @@ function useMovies(queryType: DataSortType) {
     [DataSortType.top_rated]: getTopRatedMovies,
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["movies", queryType],
     queryFn: queryObj[queryType],
   });
 
-  return data;
+  return { data, isLoading };
 }
 
 export default useMovies;

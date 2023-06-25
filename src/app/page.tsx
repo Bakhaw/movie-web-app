@@ -14,8 +14,9 @@ import useFilteredTvs from "@/hooks/useFilteredTvs";
 const Page: React.FC = () => {
   const { queryParams } = useQueryParams<QueryParams>();
 
-  const trendingMovies = useTrendingMovies();
-  const trendingTvs = useTrendingTvs();
+  const { data: trendingMovies, isLoading: isMoviesLoading } =
+    useTrendingMovies();
+  const { data: trendingTvs, isLoading: isTvsLoading } = useTrendingTvs();
 
   const filteredMovies = useFilteredMovies({
     movies: trendingMovies?.results || [],
@@ -27,12 +28,22 @@ const Page: React.FC = () => {
     tvs: trendingTvs?.results || [],
   });
 
+  console.log("loading movies:", isMoviesLoading);
+
   return (
     <main className="flex flex-col gap-12 p-6">
       <SearchForm searchResults={[...filteredMovies, ...filteredTvs]} />
 
-      <MovieList listTitle="Trending movies" movies={filteredMovies} />
-      <TvList listTitle="Trending TV" tvs={filteredTvs} />
+      <MovieList
+        isLoading={isMoviesLoading}
+        listTitle="Trending movies"
+        movies={filteredMovies}
+      />
+      <TvList
+        isLoading={isTvsLoading}
+        listTitle="Trending TV"
+        tvs={filteredTvs}
+      />
     </main>
   );
 };

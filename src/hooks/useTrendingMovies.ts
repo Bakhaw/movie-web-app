@@ -9,12 +9,12 @@ function getTrendingMovies() {
 }
 
 function useTrendingMovies() {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["trending_movies"],
     queryFn: getTrendingMovies,
   });
 
-  return data;
+  return { data, isLoading };
 }
 
 export default useTrendingMovies;

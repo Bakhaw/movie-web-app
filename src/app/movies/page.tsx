@@ -18,7 +18,7 @@ const Page: React.FC = () => {
     setSortType(value as DataSortType);
   }
 
-  const movies = useMovies(sortType);
+  const { data: movies, isLoading } = useMovies(sortType);
   const filteredMovies = useFilteredMovies({
     movies: movies?.results || [],
     query: queryParams.search || "",
@@ -34,7 +34,11 @@ const Page: React.FC = () => {
         <SortTypeSelect onValueChange={handleSelectChange} />
       </div>
 
-      <MovieList listTitle={movieListTitle} movies={filteredMovies} />
+      <MovieList
+        isLoading={isLoading}
+        listTitle={movieListTitle}
+        movies={filteredMovies}
+      />
     </main>
   );
 };

@@ -18,7 +18,7 @@ const Page: React.FC = () => {
     setSortType(value as DataSortType);
   }
 
-  const tvs = useTvs(sortType);
+  const { data: tvs, isLoading } = useTvs(sortType);
   const filteredTvs = useFilteredTvs({
     query: queryParams.search || "",
     tvs: tvs?.results || [],
@@ -34,7 +34,11 @@ const Page: React.FC = () => {
         <SortTypeSelect onValueChange={handleSelectChange} />
       </div>
 
-      <TvList listTitle={tvsListTitle} tvs={filteredTvs} />
+      <TvList
+        isLoading={isLoading}
+        listTitle={tvsListTitle}
+        tvs={filteredTvs}
+      />
     </main>
   );
 };

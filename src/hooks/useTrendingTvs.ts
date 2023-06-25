@@ -9,12 +9,12 @@ function getTrendingTvs() {
 }
 
 function useTrendingTvs() {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["trending_tvs"],
     queryFn: getTrendingTvs,
   });
 
-  return data;
+  return { data, isLoading };
 }
 
 export default useTrendingTvs;

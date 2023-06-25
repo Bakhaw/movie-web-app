@@ -2,7 +2,7 @@ import { Skeleton } from "../ui/skeleton";
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const EmptyData = () => (
+const LoadingData = () => (
   <ul className="flex flex-wrap items-start">
     {arr.map((item) => (
       <li
@@ -17,4 +17,4 @@ const EmptyData = () => (
   </ul>
 );
 
-export default EmptyData;
+export default LoadingData;
