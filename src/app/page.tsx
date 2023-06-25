@@ -108,16 +108,10 @@ const Page: React.FC = () => {
 
   return (
     <main className="flex flex-col gap-12 p-6">
-      <SearchForm
-        inputRef={inputRef}
-        onClear={handleInputClear}
-        onInputChange={handleInputChange}
-        onSubmit={handleSubmit}
-        resultsPlaceholder={[...filteredMovies, ...filteredTv]}
-      />
+      <SearchForm searchResults={[...filteredMovies, ...filteredTv]} />
 
       <MovieList listTitle="Trending movies" movies={filteredMovies} />
-      <TvList listTitle="Trending TV" tv={filteredTv} />
+      <TvList listTitle="Trending TV" tvs={filteredTv} />
     </main>
   );
 };
