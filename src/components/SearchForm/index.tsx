@@ -24,6 +24,8 @@ const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
   }
 
   function onInputChange(e: ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+
     setQueryParams({ search: e.target.value });
   }
 
