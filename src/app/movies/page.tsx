@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
+import useFilteredMovies from "@/hooks/useFilteredMovies";
 import useMovies from "@/hooks/useMovies";
 import useQueryParams from "@/hooks/useQueryParams";
 import { DataSortType, QueryParams } from "@/types";
@@ -17,16 +18,11 @@ const Page: React.FC = () => {
     setSortType(value as DataSortType);
   }
 
-  const currentMovies = useMovies(sortType);
-  const filteredMovies = useMemo(
-    () =>
-      currentMovies?.results.filter((movie) =>
-        queryParams.search
-          ? movie.title.toLowerCase().includes(queryParams.search.toLowerCase())
-          : movie
-      ),
-    [currentMovies?.results, queryParams.search]
-  );
+  const movies = useMovies(sortType);
+  const filteredMovies = useFilteredMovies({
+    movies: movies?.results || [],
+    query: queryParams.search || "",
+  });
 
   const movieListTitle =
     sortType === DataSortType.popular ? "Popular" : "Top rated";
@@ -34,7 +30,7 @@ const Page: React.FC = () => {
   return (
     <main className="flex flex-col gap-12 p-6">
       <div className="flex items-end justify-between gap-4 flex-wrap">
-        <SearchForm searchResults={filteredMovies || []} />
+        <SearchForm searchResults={filteredMovies} />
         <SortTypeSelect onValueChange={handleSelectChange} />
       </div>
 
