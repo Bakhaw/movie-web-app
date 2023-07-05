@@ -32,7 +32,10 @@ const Page: React.FC = () => {
 
   return (
     <main className="flex flex-col gap-12 p-6">
-      <SearchForm searchResults={[...filteredMovies, ...filteredTvs]} />
+      <SearchForm
+        key="search-form"
+        searchResults={[...filteredMovies, ...filteredTvs]}
+      />
 
       <MovieList
         isLoading={isMoviesLoading}
