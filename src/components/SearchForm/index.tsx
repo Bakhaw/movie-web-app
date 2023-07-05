@@ -49,7 +49,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
           <Label htmlFor="search">Search Movies & TV shows</Label>
         </div>
 
-        <Input
+        <input
           id="search"
           className="w-full md:w-[298px]"
           defaultValue={queryParams.search}
