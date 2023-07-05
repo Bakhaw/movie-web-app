@@ -1,6 +1,7 @@
-import { getDataById } from "@/api";
+"use client";
+
+import { useMovie } from "@/hooks/useMovies";
 import { getFullImgPath } from "@/lib/utils";
-import { DataSourceType, Movie } from "@/types";
 
 import Bio from "@/components/Bio";
 import DetailsTable from "@/components/DetailsTable";
@@ -15,8 +16,10 @@ interface PageProps {
   };
 }
 
-async function Page({ params }: PageProps) {
-  const movie = await getDataById<Movie>(DataSourceType.movie, params.id);
+function Page({ params }: PageProps) {
+  const { data: movie, isLoading } = useMovie(params.id);
+
+  if (!movie || isLoading) return null;
 
   return (
     <div

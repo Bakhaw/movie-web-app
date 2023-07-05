@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import useFilteredMovies from "@/hooks/useFilteredMovies";
-import useMovies from "@/hooks/useMovies";
+import { useMovies } from "@/hooks/useMovies";
 import useQueryParams from "@/hooks/useQueryParams";
 import { DataSortType, QueryParams } from "@/types";
 

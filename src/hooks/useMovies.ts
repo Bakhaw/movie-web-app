@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getDataByType } from "@/api";
+import { getDataById, getDataByType } from "@/api";
 import { DataSortType, DataSourceType, Movie } from "@/types";
 
 function getPopularMovies() {
@@ -16,7 +16,7 @@ function getTopRatedMovies() {
   return data;
 }
 
-function useMovies(queryType: DataSortType) {
+export function useMovies(queryType: DataSortType) {
   const queryObj = {
     [DataSortType.popular]: getPopularMovies,
     [DataSortType.top_rated]: getTopRatedMovies,
@@ -30,4 +30,11 @@ function useMovies(queryType: DataSortType) {
   return { data, isLoading };
 }
 
-export default useMovies;
+export function useMovie(movieId: string) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["movie", movieId],
+    queryFn: () => getDataById<Movie>(DataSourceType.movie, movieId),
+  });
+
+  return { data, isLoading };
+}

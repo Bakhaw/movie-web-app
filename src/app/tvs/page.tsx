@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import useFilteredTvs from "@/hooks/useFilteredTvs";
 import useQueryParams from "@/hooks/useQueryParams";
-import useTvs from "@/hooks/useTvs";
+import { useTvs } from "@/hooks/useTvs";
 import { DataSortType, QueryParams } from "@/types";
 
 import SearchForm from "@/components/SearchForm";

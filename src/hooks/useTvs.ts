@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getDataByType } from "@/api";
+import { getDataById, getDataByType } from "@/api";
 import { DataSortType, DataSourceType, TV } from "@/types";
 
 function getPopularTvs() {
@@ -13,7 +13,7 @@ function getTopRatedTvs() {
   return data;
 }
 
-function useTvs(queryType: DataSortType) {
+export function useTvs(queryType: DataSortType) {
   const queryObj = {
     [DataSortType.popular]: getPopularTvs,
     [DataSortType.top_rated]: getTopRatedTvs,
@@ -27,4 +27,11 @@ function useTvs(queryType: DataSortType) {
   return { data, isLoading };
 }
 
-export default useTvs;
+export function useTv(tvId: string) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["tv", tvId],
+    queryFn: () => getDataById<TV>(DataSourceType.tv, tvId),
+  });
+
+  return { data, isLoading };
+}

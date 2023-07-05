@@ -1,6 +1,7 @@
-import { getDataById } from "@/api";
+"use client";
+
+import { useTv } from "@/hooks/useTvs";
 import { getFullImgPath } from "@/lib/utils";
-import { DataSourceType, TV } from "@/types";
 
 import Bio from "@/components/Bio";
 import DetailsTable from "@/components/DetailsTable";
@@ -15,8 +16,10 @@ interface PageProps {
   };
 }
 
-async function Page({ params }: PageProps) {
-  const tv = await getDataById<TV>(DataSourceType.tv, params.id);
+function Page({ params }: PageProps) {
+  const { data: tv, isLoading } = useTv(params.id);
+
+  if (!tv || isLoading) return null;
 
   return (
     <div
