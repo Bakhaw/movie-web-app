@@ -24,8 +24,6 @@ const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
   }
 
   function onInputChange(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    e.stopPropagation();
     setQueryParams({ search: e.target.value });
   }
 
@@ -35,7 +33,6 @@ const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    e.stopPropagation();
 
     setShowSearchResults(false);
     setQueryParams({ search: inputRef?.current?.value });
@@ -51,7 +48,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
           <Label htmlFor="search">Search Movies & TV shows</Label>
         </div>
 
-        <input
+        <Input
           id="search"
           className="w-full md:w-[298px]"
           defaultValue={queryParams.search}
