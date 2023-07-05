@@ -14,7 +14,6 @@ interface SearchFormProps {
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
-  const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -44,13 +43,14 @@ const SearchForm: React.FC<SearchFormProps> = ({ searchResults }) => {
       <form
         className="flex flex-col md:flex-row justify-start items-start gap-2"
         onSubmit={onSubmit}
-        ref={formRef}
+        key="search-form-children"
       >
         <div className="md:hidden">
           <Label htmlFor="search">Search Movies & TV shows</Label>
         </div>
 
         <Input
+          key="search-input-children"
           id="search"
           className="w-full md:w-[298px]"
           defaultValue={queryParams.search}
